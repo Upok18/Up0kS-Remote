@@ -1,5 +1,9 @@
 # Up0k Remote
 
+![Version](https://img.shields.io/badge/version-v0.1.0-blue)
+![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 A lightweight remote control application for Windows PCs.
 
 Control your computer from your phone over your local network.
