@@ -1,8 +1,10 @@
 # Up0k Remote
 
-![Version](https://img.shields.io/badge/version-v0.1.0-blue)
-![Platform](https://img.shields.io/badge/platform-Windows-0078D6)
-![License](https://img.shields.io/badge/license-MIT-green)
+![Release](https://img.shields.io/github/v/release/Upok18/Up0kS-Remote)
+![Downloads](https://img.shields.io/github/downloads/Upok18/Up0kS-Remote/total)
+![License](https://img.shields.io/github/license/Upok18/Up0kS-Remote)
+![Python](https://img.shields.io/badge/Python-3.14-blue?logo=python)
+![Windows](https://img.shields.io/badge/Windows-10%2F11-0078D6?logo=windows)
 
 A lightweight remote control application for Windows PCs.
 
