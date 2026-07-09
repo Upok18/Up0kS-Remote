@@ -1,0 +1,17 @@
+"""
+Ping Command
+"""
+
+from __future__ import annotations
+
+from remote.version import PROTOCOL_VERSION
+
+
+def ping(data: dict) -> dict:
+    """Reply with PONG."""
+
+    return {
+        "version": PROTOCOL_VERSION,
+        "action": "pong",
+        "data": {"message": "PONG"},
+    }

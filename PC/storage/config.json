@@ -1,0 +1,24 @@
+{
+    "version": "0.1.0",
+    "server": {
+        "host": "0.0.0.0",
+        "port": 5000,
+        "max_connections": 5,
+        "lan_discovery": true
+    },
+    "security": {
+        "remember_devices": true,
+        "max_login_attempts": 5,
+        "lockout_minutes": 5
+    },
+    "ui": {
+        "show_timestamps": true,
+        "enable_keybinds": true,
+        "theme": "default",
+        "animations": true
+    },
+    "startup": {
+        "start_with_windows": false,
+        "minimize_to_tray": false
+    }
+}
