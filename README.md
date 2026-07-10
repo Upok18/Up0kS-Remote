@@ -54,7 +54,7 @@ Control your computer from your phone over your local network.
 - Android Application
 - Interactive Desktop UI
 - Volume Slider
-- Kaiyums Hot Femboy Pic
+- Arifin's Hot Femboy Pic
 
 ### Future
 - CPU/RAM Monitoring
