@@ -44,32 +44,39 @@ Control your computer from your phone over your local network.
 
 ## Roadmap
 
-### v0.1.0
+### v0.1.0✅
 - Authentication
 - Media Controls
 - Power Controls
 - LAN Discovery
 
-### v0.2.0
+### v0.2.0✅
 - Android Application
 - Interactive Desktop UI
 - Volume Slider
-- Arifin's Hot Gay Pic
-- Kaiyum's Femboy Pic
+- Arifin's Hot Gay Pic❌
+- Kaiyum's Femboy Pic❌
 
 <br>
-<p align="center">
+<p align="left">
     <img src="https://i.imgur.com/Gyekk15.png" width="200">
 </p>
 <br>
 
-### Future
-- CPU/RAM Monitoring
-- File Transfer
-- Mouse & Keyboard Control
-- Internet Remote Access
-- Themes
-- Plugin System
+## v0.3.0
+- [ ] Android App Icon
+- [ ] Windows Desktop Icon
+- [ ] Real LAN Discovery
+- [ ] Connect to PC
+- [ ] Mouse Control
+
+## v0.4.0
+- [ ] Keyboard
+- [ ] Media Controls
+- [ ] Power Controls
+
+## v1.0.0
+- [ ] Stable Release
 
 ---
 
