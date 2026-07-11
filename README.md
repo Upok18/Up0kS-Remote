@@ -58,7 +58,7 @@ Control your computer from your phone over your local network.
 - Kaiyum's Femboy Pic
 
 <p align="center">
-    <img src="https://imgur.com/a/vNG61Xd" width="200">
+    <img src="https://i.imgur.com/XayYtaj.png" width="200">
 </p>
 
 ### Future
