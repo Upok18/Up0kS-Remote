@@ -54,8 +54,8 @@ Control your computer from your phone over your local network.
 - :white_check_mark: Android Application
 - :white_check_mark: Interactive Desktop UI
 - :white_check_mark: Volume Slider
-- [ ] Arifin's Hot Gay Pic
-- [ ] Kaiyum's Femboy Pic
+- :white_large_square: Arifin's Hot Gay Pic
+- :white_large_square: Kaiyum's Femboy Pic
 
 <br>
 <p align="left">
@@ -64,19 +64,19 @@ Control your computer from your phone over your local network.
 <br>
 
 ## v0.3.0
-- [ ] Android App Icon
-- [ ] Windows Desktop Icon
-- [ ] Real LAN Discovery
-- [ ] Connect to PC
-- [ ] Mouse Control
+- :white_large_square: Android App Icon
+- :white_large_square: Windows Desktop Icon
+- :white_large_square: Real LAN Discovery
+- :white_large_square: Connect to PC
+- :white_large_square: Mouse Control
 
 ## v0.4.0
-- [ ] Keyboard
-- [ ] Media Controls
-- [ ] Power Controls
+- :white_large_square: Keyboard
+- :white_large_square: Media Controls
+- :white_large_square: Power Controls
 
 ## v1.0.0
-- [ ] Stable Release
+- :white_large_square: Stable Release
 
 ---
 
