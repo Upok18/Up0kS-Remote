@@ -54,8 +54,8 @@ Control your computer from your phone over your local network.
 - [X] Android Application
 - [X] Interactive Desktop UI
 - [X] Volume Slider
-- [X] Arifin's Hot Gay Pic
-- [X] Kaiyum's Femboy Pic
+- [ ] Arifin's Hot Gay Pic
+- [ ] Kaiyum's Femboy Pic
 
 <br>
 <p align="left">
