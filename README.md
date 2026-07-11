@@ -59,7 +59,7 @@ Control your computer from your phone over your local network.
 
 <br>
 <p align="center">
-    <img src="https://i.imgur.com/XayYtaj.png" width="200">
+    <img src="https://i.imgur.com/Gyekk15.png" width="200">
 </p>
 <br>
 
