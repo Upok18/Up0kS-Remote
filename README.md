@@ -57,6 +57,10 @@ Control your computer from your phone over your local network.
 - Arifin's Hot Gay Pic
 - Kaiyum's Femboy Pic
 
+<p align="center">
+    <img src="https://imgur.com/a/vNG61Xd" width="200">
+</p>
+
 ### Future
 - CPU/RAM Monitoring
 - File Transfer
