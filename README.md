@@ -45,15 +45,15 @@ Control your computer from your phone over your local network.
 ## Roadmap
 
 ### v0.1.0✅
-- [X] Authentication
-- [X] Media Controls
-- [X] Power Controls
-- [X] LAN Discovery
+- :white_check_mark: Authentication
+- :white_check_mark: Media Controls
+- :white_check_mark: Power Controls
+- :white_check_mark: LAN Discovery
 
 ### v0.2.0✅
-- [X] Android Application
-- [X] Interactive Desktop UI
-- [X] Volume Slider
+- :white_check_mark: Android Application
+- :white_check_mark: Interactive Desktop UI
+- :white_check_mark: Volume Slider
 - [ ] Arifin's Hot Gay Pic
 - [ ] Kaiyum's Femboy Pic
 
