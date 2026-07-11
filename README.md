@@ -45,17 +45,17 @@ Control your computer from your phone over your local network.
 ## Roadmap
 
 ### v0.1.0✅
-- Authentication
-- Media Controls
-- Power Controls
-- LAN Discovery
+- [X] Authentication
+- [X] Media Controls
+- [X] Power Controls
+- [X] LAN Discovery
 
 ### v0.2.0✅
-- Android Application
-- Interactive Desktop UI
-- Volume Slider
-- Arifin's Hot Gay Pic❌
-- Kaiyum's Femboy Pic❌
+- [X] Android Application
+- [X] Interactive Desktop UI
+- [X] Volume Slider
+- [X] Arifin's Hot Gay Pic
+- [X] Kaiyum's Femboy Pic
 
 <br>
 <p align="left">
