@@ -21,8 +21,10 @@ def shutdown(data: dict) -> dict:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "success",
-        "data": {"message": "PC will shut down in 30 seconds."},
+        "type": "success",
+        "data": {
+            "message": "PC will shut down in 30 seconds."
+            },
     }
 
 
@@ -38,6 +40,8 @@ def restart(data: dict) -> dict:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "success",
-        "data": {"message": "PC will restart in 30 seconds."},
+        "type": "success",
+        "data": {
+            "message": "PC will restart in 30 seconds."
+            },
     }

@@ -13,11 +13,10 @@ from remote.auth import authenticate
 from remote.constants import BUFFER_SIZE, DEFAULT_HOST, DEFAULT_PORT
 from remote.protocol import decode_packet, encode_packet
 from remote.session import Session
-from remote.handshake import create_hello
 from remote.commands.dispatcher import dispatch
 from remote.logger import error
 # from remote.session import
-
+from remote.handshake import create_hello
 
 class NetworkServer:
     """TCP server for Up0k Remote."""
@@ -71,6 +70,8 @@ class NetworkServer:
         try:
             data = client.recv(BUFFER_SIZE)
 
+            print("RAW", repr(data))
+
             if not data:
                 return None
 
@@ -108,13 +109,14 @@ class NetworkServer:
             packet = self.receive_packet(session.client)
 
             if packet is None:
-                return
+                 print(f"Disconnected during authentication: {session.address}")
+                 return
 
             response = authenticate(packet)
 
             self.send_packet(session.client, response)
 
-            if response["action"] != "auth_ok":
+            if response["type"] != "auth_ok":
                 return
 
             session.authenticated = True

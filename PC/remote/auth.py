@@ -110,11 +110,13 @@ Authentication
 def authenticate(packet: dict[str, Any]) -> dict[str, Any]:
     """Authenticate a client."""
 
-    if packet.get("action") != "login":
+    if packet.get("type") != "login":
         return {
             "version": PROTOCOL_VERSION,
-            "action": "auth_failed",
-            "data": {"reason": "Invalid packet."},
+            "type": "auth_failed",
+            "data": {
+                "reason": "Invalid packet."
+            },
         }
 
     password = packet.get("data", {}).get("password", "")
@@ -122,12 +124,14 @@ def authenticate(packet: dict[str, Any]) -> dict[str, Any]:
     if verify_password(password):
         return {
             "version": PROTOCOL_VERSION,
-            "action": "auth_ok",
+            "type": "auth_ok",
             "data": {},
         }
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "auth_failed",
-        "data": {"reason": "Wrong password."},
+        "type": "auth_failed",
+        "data": {
+            "reason": "Wrong password."
+        },
     }

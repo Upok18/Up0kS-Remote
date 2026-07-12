@@ -12,6 +12,8 @@ def ping(data: dict) -> dict:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "pong",
-        "data": {"message": "PONG"},
+        "type": "pong",
+        "data": {
+            "message": "PONG"
+            },
     }

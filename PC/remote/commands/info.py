@@ -15,7 +15,7 @@ def execute(data: dict) -> dict:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "info",
+        "type": "info",
         "data": {
             "device_name": socket.gethostname(),
             "system": platform.system(),

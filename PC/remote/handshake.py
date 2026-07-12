@@ -8,16 +8,13 @@ from __future__ import annotations
 from remote.version import NAME, VERSION, PROTOCOL_VERSION
 
 
-def create_hello() -> dict:
-    """Create the server hello packet."""
-
+def create_hello():
     return {
-        "version": PROTOCOL_VERSION,
-        "action": "hello",
+        "type": "hello",
         "data": {
             "app": NAME,
-            "server_version": VERSION,
-            "protocol_version": PROTOCOL_VERSION,
+            "version": VERSION,
+            "protocol": PROTOCOL_VERSION,
             "authentication": True,
         },
     }

@@ -53,7 +53,7 @@ def mute(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "mute",
+        "type": "mute",
         "data": {
             "muted": not muted,
         },
@@ -69,7 +69,7 @@ def unmute(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "unmute",
+        "type": "unmute",
         "data": {
             "muted": False,
         },
@@ -87,7 +87,7 @@ def toggle_mute(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "toggle_mute",
+        "type": "toggle_mute",
         "data": {
             "muted": not muted,
         },
@@ -106,7 +106,7 @@ def volume_up(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "volume_up",
+        "type": "volume_up",
         "data": {
             "volume": round(current * 100),
         },
@@ -125,7 +125,7 @@ def volume_down(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "volume_down",
+        "type": "volume_down",
         "data": {
             "volume": round(current * 100),
         },
@@ -139,7 +139,7 @@ def play_pause(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "play_pause",
+        "type": "play_pause",
         "data": {},
     }
 
@@ -151,7 +151,7 @@ def next_track(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "next_track",
+        "type": "next_track",
         "data": {},
     }
 
@@ -163,6 +163,6 @@ def previous_track(data: dict[str, Any]) -> dict[str, Any]:
 
     return {
         "version": PROTOCOL_VERSION,
-        "action": "previous_track",
+        "type": "previous_track",
         "data": {},
     }

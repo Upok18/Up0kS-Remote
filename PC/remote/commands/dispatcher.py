@@ -38,22 +38,26 @@ COMMANDS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
 def dispatch(packet: dict[str, Any]) -> dict[str, Any]:
     """Dispatch an incoming command."""
 
-    action = packet.get("action")
+    packet_type = packet.get("type")
 
-    if not isinstance(action, str):
+    if not isinstance(packet_type, str):
         return {
             "version": PROTOCOL_VERSION,
-            "action": "error",
-            "data": {"message": "Invalid action."},
+            "type": "error",
+            "data": {
+                "message": "Invalid action."
+                },
         }
 
-    command = COMMANDS.get(action)
+    command = COMMANDS.get(packet_type)
 
     if command is None:
         return {
             "version": PROTOCOL_VERSION,
-            "action": "error",
-            "data": {"message": "Unknown command."},
+            "type": "error",
+            "data": {
+                "message": "Unknown packet command."
+                },
         }
 
     return command(packet.get("data", {}))

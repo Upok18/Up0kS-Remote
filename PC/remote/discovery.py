@@ -7,14 +7,14 @@ from __future__ import annotations
 
 import socket
 import threading
-import time
 import json
-from remote.constants import DISCOVERY_PORT, DISCOVERY_INTERVAL, DEFAULT_PORT
-from remote.logger import info
+from remote.constants import DISCOVERY_PORT, DEFAULT_PORT
+from remote.logger import info, error
+from remote.version import VERSION
 
 
 class DiscoveryServer:
-    """Broadcasts this PC on the local network."""
+    """Responds to LAN discovery requests."""
 
     def __init__(self) -> None:
         self.running = False
@@ -29,7 +29,7 @@ class DiscoveryServer:
         self.running = True
 
         self.thread = threading.Thread(
-            target=self.broadcast_loop,
+            target=self.listen,
             daemon=True,
         )
 
@@ -43,22 +43,43 @@ class DiscoveryServer:
         self.running = False
         info("Discovery service stopped.")
 
-    def broadcast_loop(self) -> None:
-        """Discovery thread."""
+    def listen(self) -> None:
+        """Listen for discovery requests."""
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-        packet = {"name": "Up0k-PC", "port": DEFAULT_PORT, "version": "0.1.0"}
+        sock.setsockopt(
+            socket.SOL_SOCKET,
+            socket.SO_REUSEADDR,
+            1,
+        )
+
+        sock.bind(("", DISCOVERY_PORT))
 
         while self.running:
-            message = json.dumps(packet).encode()
 
-            sock.sendto(
-                message,
-                ("255.255.255.255", DISCOVERY_PORT),
-            )
+            data, address = sock.recvfrom(1024)
 
-            time.sleep(DISCOVERY_INTERVAL)
+            try:
+                message = data.decode()
+
+                if message != "WHO_IS_UP0K_REMOTE":
+                    continue
+
+                packet = {
+                    "name": socket.gethostname(),
+                    "port": DEFAULT_PORT,
+                    "version": VERSION,
+                }
+
+                sock.sendto(
+                    json.dumps(packet).encode(),
+                    address,
+                )
+
+            except Exception as e:
+                print(f"Discovery error: {e}")
+                # continue
+                
 
         sock.close()
