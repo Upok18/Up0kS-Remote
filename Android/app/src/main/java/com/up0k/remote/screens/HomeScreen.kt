@@ -23,14 +23,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
 
 import com.up0k.remote.components.Up0kButton
-import com.up0k.remote.ui.theme.Up0kRemoteTheme
-import com.up0k.remote.navigation.Routes
 import com.up0k.remote.models.PcDevice
 import com.up0k.remote.components.DevBanner
 import com.up0k.remote.components.Up0kCard
 import com.up0k.remote.dialogs.ComingSoonDialog
+import com.up0k.remote.viewmodels.HomeViewModel
+import com.up0k.remote.ui.theme.Up0kRemoteTheme
+import com.up0k.remote.navigation.Routes
 
 @Composable
 fun HomeScreen(
@@ -39,17 +42,14 @@ fun HomeScreen(
     onToggleTheme: () -> Unit
 ) {
 
+    val viewModel: HomeViewModel = viewModel()
+
+    val devices by viewModel.devices.collectAsState()
+    val scanning by viewModel.scanning.collectAsState()
+
     var showComingSoon by remember {
         mutableStateOf(false)
     }
-
-    val devices = listOf(
-        PcDevice(
-            name = "Up0k-PC",
-            ip = "167.136.99.67",
-            online = true
-        )
-    )
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -97,9 +97,9 @@ fun HomeScreen(
                 )
 
                 Up0kButton(
-                    text = "🔄 Scan",
+                    text = if (scanning) "Scanning..." else "🔄 Scan",
                     onClick = {
-                        // We'll add scanning here later
+                        viewModel.scan()
                     }
                 )
 
@@ -119,12 +119,27 @@ fun HomeScreen(
                         ip = device.ip,
                         online = device.online,
                         onConnect = {
-                            showComingSoon = true
+                            val connected = viewModel.connect(device)
+
+                            if (connected) {
+                                showComingSoon = true
+                            }
                         }
                     )
 
                 }
 
+            }
+
+            if (!scanning && devices.isEmpty()) {
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Text(
+                    text = "No devices found.\nTap Scan to search.",
+                    color = MaterialTheme.colorScheme.onBackground,
+                    textAlign = TextAlign.Center
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))

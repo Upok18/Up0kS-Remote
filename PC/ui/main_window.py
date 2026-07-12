@@ -3,6 +3,7 @@ import customtkinter as ctk
 from ui.widgets.info_card import InfoCard
 from ui.widgets.section import Section
 from ui.widgets.sidebar import Sidebar
+from remote.system import get_computer_name, get_local_ip
 
 
 class MainWindow(ctk.CTk):
@@ -136,7 +137,7 @@ class MainWindow(ctk.CTk):
         self.computer_name_card = InfoCard(
             self.computer_section,
             "Computer Name",
-            "DESKTOP-UP0K"
+            get_computer_name()
         )
 
         self.computer_section.add(
@@ -146,7 +147,7 @@ class MainWindow(ctk.CTk):
         self.ip_card = InfoCard(
             self.computer_section,
             "IP Address",
-            "192.168.0.102"
+            get_local_ip()
         )
 
         self.computer_section.add(
