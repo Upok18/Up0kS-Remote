@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.1.0-alpha.1",
     "server": {
         "host": "0.0.0.0",
         "port": 5000,
@@ -7,14 +7,16 @@
         "lan_discovery": true
     },
     "security": {
+        "password_hash": "",
         "remember_devices": true,
+        "trusted_devices": [],
         "max_login_attempts": 5,
-        "lockout_minutes": 5
+        "lockout_minutes": 15
     },
     "ui": {
+        "theme": "dark",
         "show_timestamps": true,
         "enable_keybinds": true,
-        "theme": "default",
         "animations": true
     },
     "startup": {

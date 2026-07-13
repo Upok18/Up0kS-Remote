@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import platform
 import socket
+import pyperclip
 
 
 def get_computer_name() -> str:
@@ -28,3 +29,18 @@ def get_local_ip() -> str:
     except OSError:
 
         return "127.0.0.1"
+    
+def copy_ip_address() -> None:
+    """Copy the local IP address."""
+
+    pyperclip.copy(
+        get_local_ip()
+    )
+
+def refresh_ip(self):
+
+    from remote.system import get_local_ip
+
+    self.ip_card.set_value(
+        get_local_ip()
+    )

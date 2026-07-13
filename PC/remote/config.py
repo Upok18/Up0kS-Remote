@@ -21,7 +21,7 @@ from remote.constants import (
 
 from remote.version import VERSION
 
-CONFIG_PATH = Path(__file__).parent.parent / "storage" / "config.json"
+CONFIG_PATH = Path(__file__).parent.parent / "storage" / "settings.json"
 
 DEFAULT_CONFIG = {
     "version": VERSION,
@@ -32,7 +32,9 @@ DEFAULT_CONFIG = {
         "lan_discovery": True,
     },
     "security": {
+        "password_hash": "",
         "remember_devices": True,
+        "trusted_devices": [],
         "max_login_attempts": MAX_LOGIN_ATTEMPTS,
         "lockout_minutes": LOCKOUT_MINUTES,
     },
@@ -72,6 +74,7 @@ def load_config() -> dict:
         config = json.load(file)
 
     config = _merge(DEFAULT_CONFIG, config)
+    config["version"] = VERSION
     save_config(config)
 
     return config

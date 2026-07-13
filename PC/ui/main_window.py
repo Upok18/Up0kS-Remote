@@ -1,9 +1,14 @@
 import customtkinter as ctk
 
+from remote.system import (
+    copy_ip_address,
+    get_computer_name,
+    get_local_ip,
+)
+
 from ui.widgets.info_card import InfoCard
 from ui.widgets.section import Section
 from ui.widgets.sidebar import Sidebar
-from remote.system import get_computer_name, get_local_ip
 
 
 class MainWindow(ctk.CTk):
@@ -56,76 +61,26 @@ class MainWindow(ctk.CTk):
         )
 
     # ==================================================
-    # Sidebar
-    # ==================================================
-
-    def create_sidebar(self):
-
-        title = ctk.CTkLabel(
-            self.sidebar,
-            text="Up0k Remote",
-            font=("Segoe UI", 30, "bold")
-        )
-
-        title.pack(
-            pady=(30, 10)
-        )
-
-        version = ctk.CTkLabel(
-            self.sidebar,
-            text="v0.1.0-alpha.1"
-        )
-
-        version.pack()
-
-        status = ctk.CTkLabel(
-            self.sidebar,
-            text="🟢 Waiting for connection..."
-        )
-
-        status.pack(
-            pady=30
-        )
-
-    # ==================================================
-    # Main Content
+    # Content
     # ==================================================
 
     def create_content(self):
 
+        self.create_computer_section()
+
+        self.create_devices_section()
+
+        self.create_actions_section()
+
+    # ==================================================
+    # Computer Information
+    # ==================================================
+
+    def create_computer_section(self):
+
         self.computer_section = Section(
             self.content,
             title="Computer Information"
-        )
-
-        self.devices_section = Section(
-            self.content,
-            title="Trusted Devices"
-        )
-
-        self.actions_section = Section(
-            self.content,
-            title="Quick Actions"
-        )
-
-        self.actions_section.pack(
-            fill="x",
-            padx=20,
-            pady=(0, 20)
-        )
-
-        self.devices_section.pack(
-            fill="x",
-            padx=20,
-            pady=(0, 20)
-        )
-
-        self.devices_section.add(
-            InfoCard(
-                self.devices_section,
-                "Devices",
-                "No trusted devices"
-            )
         )
 
         self.computer_section.pack(
@@ -164,6 +119,12 @@ class MainWindow(ctk.CTk):
             self.status_card
         )
 
+    # ==================================================
+    # Trusted Devices
+    # ==================================================
+
+    def create_devices_section(self):
+
         self.devices_section = Section(
             self.content,
             title="Trusted Devices"
@@ -175,34 +136,67 @@ class MainWindow(ctk.CTk):
             pady=(0, 20)
         )
 
+        self.devices_card = InfoCard(
+            self.devices_section,
+            "Devices",
+            "No trusted devices"
+        )
+
         self.devices_section.add(
-            InfoCard(
-                self.devices_section,
-                "Devices",
-                "No trusted devices"
-            )
+            self.devices_card
         )
 
-        copy_button = ctk.CTkButton(
+    # ==================================================
+    # Quick Actions
+    # ==================================================
+
+    def create_actions_section(self):
+
+        self.actions_section = Section(
+            self.content,
+            title="Quick Actions"
+        )
+
+        self.actions_section.pack(
+            fill="x",
+            padx=20,
+            pady=(0, 20)
+        )
+
+        self.copy_button = ctk.CTkButton(
             self.actions_section,
-            text="📋 Copy IP Address"
+            text="📋 Copy IP Address",
+            command=copy_ip_address
         )
 
-        copy_button.grid(
+        self.copy_button.grid(
             row=1,
             column=0,
             sticky="ew",
-            pady=8
+            padx=15,
+            pady=(10, 5)
         )
 
-        refresh_button = ctk.CTkButton(
+        self.refresh_button = ctk.CTkButton(
             self.actions_section,
-            text="🔄 Refresh IP"
+            text="🔄 Refresh IP",
+            command=self.refresh_ip
         )
 
-        refresh_button.grid(
+        self.refresh_button.grid(
             row=2,
             column=0,
             sticky="ew",
-            pady=8
+            padx=15,
+            pady=(5, 15)
+        )
+
+    # ==================================================
+    # Actions
+    # ==================================================
+
+    def refresh_ip(self):
+
+        self.ip_card.set_value(
+            get_local_ip()
         )
