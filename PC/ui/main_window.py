@@ -9,6 +9,14 @@ from remote.system import (
 from ui.widgets.info_card import InfoCard
 from ui.widgets.section import Section
 from ui.widgets.sidebar import Sidebar
+from ui.utils.window import center_window
+from remote.devices import get_trusted_devices
+from remote.status import Status
+from remote.service import RemoteService
+from remote.pairing import (
+    generate_pair_code,
+    clear_pair_code
+)
 
 
 class MainWindow(ctk.CTk):
@@ -17,15 +25,19 @@ class MainWindow(ctk.CTk):
 
         super().__init__()
 
+        self.remote = RemoteService()
+
         self.title("Up0k Remote")
 
-        self.geometry("1100x700")
+        center_window(self, 1080, 700)
 
         self.minsize(1000, 650)
 
         self.create_layout()
 
         self.create_content()
+
+        self.remote.start_server()
 
     # ==================================================
     # Layout
@@ -60,6 +72,8 @@ class MainWindow(ctk.CTk):
             pady=20
         )
 
+        self.content.grid_columnconfigure(0, weight=1)
+
     # ==================================================
     # Content
     # ==================================================
@@ -86,37 +100,51 @@ class MainWindow(ctk.CTk):
         self.computer_section.pack(
             fill="x",
             padx=20,
-            pady=20
+            pady=(12, 8)
         )
 
         self.computer_name_card = InfoCard(
-            self.computer_section,
+            self.computer_section.content,
             "Computer Name",
-            get_computer_name()
+            self.remote.computer_name()
         )
 
-        self.computer_section.add(
-            self.computer_name_card
+        self.computer_name_card.pack(
+            fill="x",
+            pady=5
         )
 
         self.ip_card = InfoCard(
-            self.computer_section,
+            self.computer_section.content,
             "IP Address",
-            get_local_ip()
+            self.remote.ip_address()
         )
 
-        self.computer_section.add(
-            self.ip_card
+        self.ip_card.pack(
+            fill="x",
+            pady=5
         )
 
         self.status_card = InfoCard(
-            self.computer_section,
+            self.computer_section.content,
             "Status",
-            "🟢 Waiting for connection"
+            Status.WAITING
         )
 
-        self.computer_section.add(
-            self.status_card
+        self.status_card.pack(
+            fill="x",
+            pady=5
+        )
+
+        self.pair_code_card = InfoCard(
+            self.computer_section.content,
+            "Pairing Code",
+            "------"
+        )
+
+        self.pair_code_card.pack(
+            fill="x",
+            pady=5
         )
 
     # ==================================================
@@ -133,17 +161,28 @@ class MainWindow(ctk.CTk):
         self.devices_section.pack(
             fill="x",
             padx=20,
-            pady=(0, 20)
+            pady=(0, 10)
         )
+
+        devices = get_trusted_devices()
+
+        if devices:
+
+            value = "\n".join(devices)
+
+        else:
+
+            value = "No trusted devices"
 
         self.devices_card = InfoCard(
-            self.devices_section,
+            self.devices_section.content,
             "Devices",
-            "No trusted devices"
+            value
         )
 
-        self.devices_section.add(
-            self.devices_card
+        self.devices_card.pack(
+            fill="x",
+            pady=5
         )
 
     # ==================================================
@@ -158,37 +197,31 @@ class MainWindow(ctk.CTk):
         )
 
         self.actions_section.pack(
-            fill="x",
+            fill="both",
+            expand=True,
             padx=20,
             pady=(0, 20)
         )
 
-        self.copy_button = ctk.CTkButton(
-            self.actions_section,
-            text="📋 Copy IP Address",
-            command=copy_ip_address
+        self.pair_button = ctk.CTkButton(
+            self.actions_section.content,
+            text="🔗 Pair Device",
+            command=self.start_pairing
         )
 
-        self.copy_button.grid(
-            row=1,
-            column=0,
-            sticky="ew",
-            padx=15,
-            pady=(10, 5)
+        self.pair_button.pack(
+            fill="x",
+            pady=(0, 5)
         )
 
         self.refresh_button = ctk.CTkButton(
-            self.actions_section,
+            self.actions_section.content,
             text="🔄 Refresh IP",
             command=self.refresh_ip
         )
 
-        self.refresh_button.grid(
-            row=2,
-            column=0,
-            sticky="ew",
-            padx=15,
-            pady=(5, 15)
+        self.refresh_button.pack(
+            fill="x"
         )
 
     # ==================================================
@@ -199,4 +232,61 @@ class MainWindow(ctk.CTk):
 
         self.ip_card.set_value(
             get_local_ip()
+        )
+
+    # ==================================================
+    # Status
+    # ==================================================
+
+    def update_status(self, status: str):
+
+        self.status_card.set_value(status)
+
+    # ==================================================
+    # Pairing
+    # ==================================================
+
+    def show_pair_code(self, code: str):
+
+        self.pair_code_card.set_value(code)
+
+
+    def clear_pair_code(self):
+
+        self.pair_code_card.set_value("------")
+
+    def start_pairing(self):
+
+        if self.pair_button.cget("state") == "disabled":
+            return
+
+        code = self.remote.start_pairing()
+
+        self.pair_button.configure(
+            state="disabled"
+        )
+
+        self.show_pair_code(code)
+
+        self.update_status(
+            Status.PAIRING
+        )
+
+        self.after(
+            60000,
+            self.end_pairing
+        )
+
+    def end_pairing(self):
+
+        self.remote.stop_pairing()
+
+        self.clear_pair_code()
+
+        self.update_status(
+            Status.WAITING
+        )
+
+        self.pair_button.configure(
+            state="normal"
         )

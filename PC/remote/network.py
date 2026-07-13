@@ -22,6 +22,7 @@ class NetworkServer:
     """TCP server for Up0k Remote."""
 
     def __init__(self) -> None:
+
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.server.setsockopt(
@@ -34,15 +35,31 @@ class NetworkServer:
 
         self.sessions: list[Session] = []
 
+        self.thread: threading.Thread | None = None
+
     def start(self) -> None:
         """Start the server."""
+
+        if self.running:
+            return
 
         self.server.bind((DEFAULT_HOST, DEFAULT_PORT))
         self.server.listen()
 
         self.running = True
 
+        self.thread = threading.Thread(
+            target=self.listen,
+            daemon=True,
+        )
+
+        self.thread.start()
+
+    def listen(self) -> None:
+        """Listen for incoming clients."""
+
         while self.running:
+
             client, address = self.accept_client()
 
             thread = threading.Thread(
@@ -57,6 +74,7 @@ class NetworkServer:
         """Stop the server."""
 
         self.running = False
+
         self.server.close()
 
     def accept_client(self) -> tuple[socket.socket, tuple[str, int]]:

@@ -1,20 +1,72 @@
+"""
+Up0k Remote
+Remote Server
+"""
+
+from __future__ import annotations
+
+import threading
+
+from remote.banner import show
 from remote.config import load_config
 from remote.discovery import DiscoveryServer
 from remote.logger import info
 from remote.network import NetworkServer
-from remote.banner import show
 
 
-def start_server() -> None:
-    config = load_config()
+class RemoteServer:
 
-    show()
+    def __init__(self):
 
-    info("Starting Up0k Remote...")
-    info(f"Listening on {config['server']['host']}:{config['server']['port']}")
+        self.running = False
 
-    discovery = DiscoveryServer()
-    discovery.start()
+        self.discovery = DiscoveryServer()
+        self.network = NetworkServer()
 
-    network = NetworkServer()
-    network.start()
+    # ==================================================
+    # Server
+    # ==================================================
+
+    def start(self) -> None:
+
+        if self.running:
+            return
+
+        config = load_config()
+
+        show()
+
+        info("Starting Up0k Remote...")
+        info(
+            f"Listening on "
+            f"{config['server']['host']}:"
+            f"{config['server']['port']}"
+        )
+
+        self.discovery.start()
+
+        threading.Thread(
+            target=self.network.start,
+            daemon=True,
+        ).start()
+
+        self.running = True
+
+    def stop(self) -> None:
+
+        if not self.running:
+            return
+
+        self.discovery.stop()
+        self.network.stop()
+
+        self.running = False
+
+    def restart(self) -> None:
+
+        self.stop()
+        self.start()
+
+    def is_running(self) -> bool:
+
+        return self.running

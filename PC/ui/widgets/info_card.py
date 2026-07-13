@@ -46,13 +46,13 @@ class InfoCard(ctk.CTkFrame):
             column=0,
             sticky="w",
             padx=20,
-            pady=(15, 3)
+            pady=(10, 2)
         )
 
         self.value_label = ctk.CTkLabel(
             self,
             text=self.value,
-            font=("Segoe UI", 22, "bold")
+            font=("Segoe UI", 18, "bold")
         )
 
         self.value_label.grid(
@@ -60,7 +60,7 @@ class InfoCard(ctk.CTkFrame):
             column=0,
             sticky="w",
             padx=20,
-            pady=(0, 15)
+            pady=(0, 10)
         )
 
     def set_value(self, value: str):

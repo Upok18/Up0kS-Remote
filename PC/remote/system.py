@@ -36,11 +36,3 @@ def copy_ip_address() -> None:
     pyperclip.copy(
         get_local_ip()
     )
-
-def refresh_ip(self):
-
-    from remote.system import get_local_ip
-
-    self.ip_card.set_value(
-        get_local_ip()
-    )

@@ -16,6 +16,7 @@ from remote.commands.media import (
     next_track,
     previous_track,
 )
+from remote.commands.pairing import execute as pair
 from typing import Any, Callable
 
 
@@ -24,6 +25,9 @@ COMMANDS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
     "restart": restart,
     "ping": ping,
     "info": info,
+
+    "pair": pair,
+    
     # "mute": mute,
     # "unmute": unmute,
     "toggle_mute": toggle_mute,

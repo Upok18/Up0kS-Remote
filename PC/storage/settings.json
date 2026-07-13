@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0-alpha.1",
+    "version": "0.3.0",
     "server": {
         "host": "0.0.0.0",
         "port": 5000,
@@ -9,7 +9,10 @@
     "security": {
         "password_hash": "",
         "remember_devices": true,
-        "trusted_devices": [],
+        "trusted_devices": [
+            "Galaxy S24",
+            "Pixel 9"
+        ],
         "max_login_attempts": 5,
         "lockout_minutes": 15
     },

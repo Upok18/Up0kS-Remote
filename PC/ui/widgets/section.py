@@ -23,28 +23,33 @@ class Section(ctk.CTkFrame):
             **kwargs
         )
 
-        self.columnconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
-        title_label = ctk.CTkLabel(
+        self.title = ctk.CTkLabel(
             self,
             text=title,
             font=("Segoe UI", 24, "bold")
         )
 
-        title_label.grid(
+        self.title.grid(
             row=0,
             column=0,
             sticky="w",
             pady=(0, 15)
         )
 
-    def add(self, widget):
+        self.content = ctk.CTkFrame(
+            self,
+            fg_color="transparent"
+        )
 
-        row = len(self.grid_slaves())
-
-        widget.grid(
-            row=row,
+        self.content.grid(
+            row=1,
             column=0,
-            sticky="ew",
-            pady=8
+            sticky="nsew"
+        )
+
+        self.content.grid_columnconfigure(
+            0,
+            weight=1
         )
