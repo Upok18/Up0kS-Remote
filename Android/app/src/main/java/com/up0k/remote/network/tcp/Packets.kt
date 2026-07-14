@@ -9,21 +9,20 @@ import org.json.JSONObject
 
 object Packets {
 
-    fun login(password: String): JSONObject {
+    fun pair(code: String, device: String): JSONObject {
 
         return JSONObject().apply {
 
-            put("type", "login")
+            put("type", "pair")
 
             put(
                 "data",
                 JSONObject().apply {
-                    put("password", password)
+                    put("code", code)
+                    put("device", device)
                 }
             )
-
         }
-
     }
 
 }

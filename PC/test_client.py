@@ -38,7 +38,7 @@ client.send(
 
 response = decode_packet(client.recv(4096))
 
-if response["action"] != "auth_ok":
+if response["type"] != "auth_ok":
     print("Authentication failed.")
     client.close()
     exit()

@@ -9,7 +9,6 @@ import socket
 import threading
 
 from typing import Any
-from remote.auth import authenticate
 from remote.constants import BUFFER_SIZE, DEFAULT_HOST, DEFAULT_PORT
 from remote.protocol import decode_packet, encode_packet
 from remote.session import Session
@@ -17,6 +16,7 @@ from remote.commands.dispatcher import dispatch
 from remote.logger import error
 # from remote.session import
 from remote.handshake import create_hello
+from remote.pairing import generate_pair_code
 
 class NetworkServer:
     """TCP server for Up0k Remote."""
@@ -101,10 +101,17 @@ class NetworkServer:
         except OSError:
             return None
 
-    def send_packet(self, client, packet: dict[str, Any]) -> None:
+    def send_packet(self, client, packet: dict) -> None:
         """Send one packet."""
 
-        client.send(encode_packet(packet))
+        encoded = encode_packet(packet)
+
+        print("SEND_PACKET:", packet)
+        print("RAW BYTES:", repr(encoded))
+
+        client.sendall(encoded)
+
+        print("SEND COMPLETE")
 
     def remove_session(self, session: Session) -> None:
         """Remove a client session."""
@@ -115,32 +122,39 @@ class NetworkServer:
         session.client.close()
 
     def handle_client(self, client, address) -> None:
+
+        print("1 - handle_client called")
+
         session = Session(client, address)
 
         try:
+
+            print("2 - session created")
+
             self.sessions.append(session)
 
             print(f"Connected: {session.address}")
 
-            self.send_packet(session.client, create_hello())
+            print("3 - creating hello packet")
+            hello = create_hello()
 
-            packet = self.receive_packet(session.client)
+            print("4 - hello packet:", hello)
 
-            if packet is None:
-                 print(f"Disconnected during authentication: {session.address}")
-                 return
+            print("5 - sending hello")
+            self.send_packet(session.client, hello)
 
-            response = authenticate(packet)
+            print("6 - hello sent")
 
-            self.send_packet(session.client, response)
-
-            if response["type"] != "auth_ok":
-                return
-
+            print("Authentication removed.")
             session.authenticated = True
 
             while True:
+
+                print("15 - waiting for command")
+
                 command_packet = self.receive_packet(session.client)
+
+                print("16 - command:", command_packet)
 
                 if command_packet is None:
                     print(f"Disconnected: {session.address}")
@@ -148,10 +162,20 @@ class NetworkServer:
 
                 result = dispatch(command_packet)
 
+                print("17 - result:", result)
+
                 self.send_packet(session.client, result)
 
+                print("18 - result sent")
+
         except Exception as e:
+
             error(f"Client error ({session.address}): {e}")
 
+            import traceback
+            traceback.print_exc()
+
         finally:
+
+            print("19 - removing session")
             self.remove_session(session)

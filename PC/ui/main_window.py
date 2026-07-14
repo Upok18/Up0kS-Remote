@@ -10,6 +10,7 @@ from ui.widgets.info_card import InfoCard
 from ui.widgets.section import Section
 from ui.widgets.sidebar import Sidebar
 from ui.utils.window import center_window
+from ui.widgets.pc_header import PcHeader
 from remote.devices import get_trusted_devices
 from remote.status import Status
 from remote.service import RemoteService
@@ -80,7 +81,9 @@ class MainWindow(ctk.CTk):
 
     def create_content(self):
 
-        self.create_computer_section()
+        self.create_pc_header()
+
+        self.create_system_section()
 
         self.create_devices_section()
 
@@ -90,7 +93,23 @@ class MainWindow(ctk.CTk):
     # Computer Information
     # ==================================================
 
-    def create_computer_section(self):
+    def create_pc_header(self):
+
+        self.pc_header = PcHeader(
+            self.content,
+            name=self.remote.computer_name(),
+            os_name="Windows 11 Pro",
+            cpu="Loading...",
+            ip=self.remote.ip_address()
+        )
+
+        self.pc_header.pack(
+            fill="x",
+            padx=20,
+            pady=(20, 10)
+        )
+
+    def create_system_section(self):
 
         self.computer_section = Section(
             self.content,
@@ -101,28 +120,6 @@ class MainWindow(ctk.CTk):
             fill="x",
             padx=20,
             pady=(12, 8)
-        )
-
-        self.computer_name_card = InfoCard(
-            self.computer_section.content,
-            "Computer Name",
-            self.remote.computer_name()
-        )
-
-        self.computer_name_card.pack(
-            fill="x",
-            pady=5
-        )
-
-        self.ip_card = InfoCard(
-            self.computer_section.content,
-            "IP Address",
-            self.remote.ip_address()
-        )
-
-        self.ip_card.pack(
-            fill="x",
-            pady=5
         )
 
         self.status_card = InfoCard(
@@ -230,7 +227,7 @@ class MainWindow(ctk.CTk):
 
     def refresh_ip(self):
 
-        self.ip_card.set_value(
+        self.pc_header.set_ip(
             get_local_ip()
         )
 
@@ -241,6 +238,8 @@ class MainWindow(ctk.CTk):
     def update_status(self, status: str):
 
         self.status_card.set_value(status)
+
+        self.pc_header.set_status(status)
 
     # ==================================================
     # Pairing

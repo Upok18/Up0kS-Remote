@@ -15,7 +15,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.navigation.NavController
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
+
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.collectAsState
 
 import com.up0k.remote.components.Up0kButton
 import com.up0k.remote.models.PcDevice
@@ -34,6 +39,7 @@ import com.up0k.remote.dialogs.ComingSoonDialog
 import com.up0k.remote.viewmodels.HomeViewModel
 import com.up0k.remote.ui.theme.Up0kRemoteTheme
 import com.up0k.remote.navigation.Routes
+import com.up0k.remote.network.tcp.RemoteClient
 
 @Composable
 fun HomeScreen(
@@ -47,9 +53,7 @@ fun HomeScreen(
     val devices by viewModel.devices.collectAsState()
     val scanning by viewModel.scanning.collectAsState()
 
-    var showComingSoon by remember {
-        mutableStateOf(false)
-    }
+    val scope = rememberCoroutineScope()
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -119,11 +123,25 @@ fun HomeScreen(
                         ip = device.ip,
                         online = device.online,
                         onConnect = {
-                            val connected = viewModel.connect(device)
 
-                            if (connected) {
-                                showComingSoon = true
+                            scope.launch {
+
+                                val connected = withContext(Dispatchers.IO) {
+                                    viewModel.connect(device)
+                                }
+
+                                if (connected) {
+
+                                    if (RemoteClient.session.pairingRequired) {
+                                        navController.navigate(Routes.Pair.route)
+                                    } else {
+                                        navController.navigate(Routes.Dashboard.route)
+                                    }
+
+                                }
+
                             }
+
                         }
                     )
 
@@ -162,12 +180,6 @@ fun HomeScreen(
                 .padding(bottom = 40.dp)
         )
 
-        ComingSoonDialog(
-            show = showComingSoon,
-            onDismiss = {
-                showComingSoon = false
-            }
-        )
    }
 }
 

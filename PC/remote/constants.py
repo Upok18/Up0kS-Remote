@@ -20,7 +20,6 @@ DISCOVERY_INTERVAL = 1
 # Security
 # =========================
 
-MAX_LOGIN_ATTEMPTS = 5
 LOCKOUT_MINUTES = 5
 
 # =========================

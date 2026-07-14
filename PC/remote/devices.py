@@ -47,3 +47,8 @@ def remove_trusted_device(device: str):
 def is_trusted(device: str) -> bool:
 
     return device in get_trusted_devices()
+
+def has_trusted_devices() -> bool:
+    """Return True if at least one trusted device exists."""
+
+    return len(get_trusted_devices()) > 0

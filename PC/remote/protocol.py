@@ -11,7 +11,9 @@ import json
 def encode_packet(data: dict) -> bytes:
     """Convert a dictionary into bytes."""
 
-    return json.dumps(data).encode("utf-8")
+    return (
+        json.dumps(data) + "\n"
+    ).encode("utf-8")
 
 
 def decode_packet(data: bytes) -> dict:

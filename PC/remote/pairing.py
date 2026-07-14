@@ -5,52 +5,56 @@ Pairing Manager
 
 from __future__ import annotations
 
-import secrets
-import time
+import json
+import random
+
+from pathlib import Path
+
+PAIR_FILE = Path(__file__).parent.parent / "storage" / "paired_devices.json"
 
 
-_current_code = None
-_created_at = None
+PAIR_CODE: str | None = None
 
-PAIR_TIMEOUT = 60
+def load_devices() -> dict:
+
+    if not PAIR_FILE.exists():
+        return {"devices": []}
+
+    try:
+        with PAIR_FILE.open("r", encoding="utf-8") as file:
+            return json.load(file)
+
+    except Exception:
+        return {"devices": []}
+
+
+def save_devices(data: dict) -> None:
+
+    PAIR_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+    with PAIR_FILE.open("w", encoding="utf-8") as file:
+        json.dump(data, file, indent=4)
+
+
+PAIR_CODE: str | None = None
 
 
 def generate_pair_code() -> str:
+    global PAIR_CODE
 
-    global _current_code
-    global _created_at
+    PAIR_CODE = f"{random.randint(0, 999999):06d}"
 
-    _current_code = f"{secrets.randbelow(1000000):06}"
-    _created_at = time.time()
-
-    return _current_code
+    return PAIR_CODE
 
 
-def get_pair_code():
-
-    return _current_code
+def get_pair_code() -> str | None:
+    return PAIR_CODE
 
 
 def verify_pair_code(code: str) -> bool:
-
-    if expired():
-        return False
-
-    return code == _current_code
+    return code == PAIR_CODE
 
 
-def clear_pair_code():
-
-    global _current_code
-    global _created_at
-
-    _current_code = None
-    _created_at = None
-
-
-def expired() -> bool:
-
-    if _created_at is None:
-        return True
-
-    return time.time() - _created_at > PAIR_TIMEOUT
+def clear_pair_code() -> None:
+    global PAIR_CODE
+    PAIR_CODE = None

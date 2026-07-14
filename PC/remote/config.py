@@ -16,7 +16,6 @@ from remote.constants import (
     DEFAULT_THEME,
     LOCKOUT_MINUTES,
     MAX_CONNECTIONS,
-    MAX_LOGIN_ATTEMPTS,
 )
 
 from remote.version import VERSION
@@ -31,13 +30,6 @@ DEFAULT_CONFIG = {
         "max_connections": MAX_CONNECTIONS,
         "lan_discovery": True,
     },
-    "security": {
-        "password_hash": "",
-        "remember_devices": True,
-        "trusted_devices": [],
-        "max_login_attempts": MAX_LOGIN_ATTEMPTS,
-        "lockout_minutes": LOCKOUT_MINUTES,
-    },
     "ui": {
         "theme": DEFAULT_THEME,
         "show_timestamps": True,
@@ -49,7 +41,6 @@ DEFAULT_CONFIG = {
         "minimize_to_tray": False,
     },
 }
-
 
 def _merge(default: dict, current: dict) -> dict:
     """Merge missing values from the default configuration."""
