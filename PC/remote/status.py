@@ -8,14 +8,14 @@ from __future__ import annotations
 
 class Status:
 
-    WAITING = "🟢 Waiting for connection"
+    WAITING = "🔵 Waiting"
 
-    PAIRING = "🟡 Pairing device"
+    PAIRING = "🟡 Pairing"
 
     AUTHENTICATING = "🔐 Authenticating..."
 
-    CONNECTED = "🟢 Phone connected"
+    CONNECTED = "🟢 Connected"
 
-    DISCONNECTED = "🔴 Disconnected"
+    DISCONNECTED = "🔴 Offline"
 
     ERROR = "❌ Connection error"

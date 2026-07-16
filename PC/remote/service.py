@@ -5,6 +5,8 @@ Remote Service
 
 from __future__ import annotations
 
+import time
+
 from remote.server import RemoteServer
 from remote.devices import (
     get_trusted_devices,
@@ -29,7 +31,9 @@ class RemoteService:
 
         self.server = RemoteServer()
 
-        pass
+        self.pairing = False
+        self.pair_code = "------"
+        self.pair_expires = 0
 
     # ==================================================
     # System
@@ -49,7 +53,11 @@ class RemoteService:
 
     def start_pairing(self):
 
-        return generate_pair_code()
+        self.pair_code = generate_pair_code()
+        self.pairing = True
+        self.pair_expires = time.time() + 60
+
+        return self.pair_code
 
     def verify_pairing(self, code: str):
 
@@ -58,6 +66,10 @@ class RemoteService:
     def stop_pairing(self):
 
         clear_pair_code()
+
+        self.pairing = False
+        self.pair_code = "------"
+        self.pair_expires = 0
 
     # ==================================================
     # Devices
@@ -97,3 +109,27 @@ class RemoteService:
     def server_running(self):
 
         return self.server.is_running()
+    
+    def pairing_active(self):
+
+        return self.pairing
+
+
+    def pairing_code(self):
+
+        return self.pair_code
+    
+    def pairing_time_left(self):
+
+        if not self.pairing:
+            return 0
+
+        return max(
+            0,
+            int(self.pair_expires - time.time())
+        )
+
+
+    def pairing_expired(self):
+
+        return self.pairing_time_left() <= 0

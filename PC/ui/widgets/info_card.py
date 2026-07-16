@@ -15,6 +15,7 @@ class InfoCard(ctk.CTkFrame):
         master,
         title: str,
         value: str,
+        value_font=("Segoe UI", 18, "bold"),
         **kwargs
     ):
 
@@ -25,8 +26,12 @@ class InfoCard(ctk.CTkFrame):
             **kwargs
         )
 
+        self.configure(height=90)
+        self.pack_propagate(False)
+
         self.title = title
         self.value = value
+        self.value_font = value_font
 
         self.build()
 
@@ -37,6 +42,7 @@ class InfoCard(ctk.CTkFrame):
         self.title_label = ctk.CTkLabel(
             self,
             text=self.title,
+            # font=("Segoe UI", 13),
             font=("Segoe UI", 13),
             text_color=("gray40", "gray70")
         )
@@ -52,7 +58,7 @@ class InfoCard(ctk.CTkFrame):
         self.value_label = ctk.CTkLabel(
             self,
             text=self.value,
-            font=("Segoe UI", 18, "bold")
+            font=self.value_font
         )
 
         self.value_label.grid(
