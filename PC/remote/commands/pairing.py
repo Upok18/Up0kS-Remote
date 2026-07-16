@@ -9,7 +9,7 @@ from remote.devices import add_trusted_device
 from remote.version import PROTOCOL_VERSION
 from remote.pairing import verify_pair_code, get_pair_code, clear_pair_code
 
-def execute(data: dict) -> dict:
+def execute(remote, data: dict) -> dict:
 
     code = data.get("code", "")
     device = data.get("device", "Unknown Device")

@@ -7,7 +7,7 @@ from __future__ import annotations
 from remote.version import PROTOCOL_VERSION
 
 
-def ping(data: dict) -> dict:
+def ping(remote, data: dict) -> dict:
     """Reply with PONG."""
 
     return {

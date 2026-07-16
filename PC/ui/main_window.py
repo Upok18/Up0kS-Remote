@@ -103,6 +103,10 @@ class MainWindow(ctk.CTk):
             ),
         }
 
+        self.remote.on_status_changed = (
+            self.pages["dashboard"].update_status
+        )
+
         for page in self.pages.values():
 
             page.grid(

@@ -42,7 +42,7 @@ def _press_key(key: int) -> None:
     )
 
 
-def mute(data: dict[str, Any]) -> dict[str, Any]:
+def mute(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Toggle mute."""
 
     volume = _volume()
@@ -60,7 +60,7 @@ def mute(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def unmute(data: dict[str, Any]) -> dict[str, Any]:
+def unmute(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Unmute system audio."""
 
     volume = _volume()
@@ -76,7 +76,7 @@ def unmute(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def toggle_mute(data: dict[str, Any]) -> dict[str, Any]:
+def toggle_mute(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Toggle mute state."""
 
     volume = _volume()
@@ -94,7 +94,7 @@ def toggle_mute(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def volume_up(data: dict[str, Any]) -> dict[str, Any]:
+def volume_up(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Increase master volume by 10%."""
 
     volume = _volume()
@@ -113,7 +113,7 @@ def volume_up(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def volume_down(data: dict[str, Any]) -> dict[str, Any]:
+def volume_down(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Decrease master volume by 10%."""
 
     volume = _volume()
@@ -132,7 +132,7 @@ def volume_down(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def play_pause(data: dict[str, Any]) -> dict[str, Any]:
+def play_pause(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Toggle play/pause."""
 
     _press_key(VK_MEDIA_PLAY_PAUSE)
@@ -144,7 +144,7 @@ def play_pause(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def next_track(data: dict[str, Any]) -> dict[str, Any]:
+def next_track(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Skip to the next track."""
 
     _press_key(VK_MEDIA_NEXT_TRACK)
@@ -156,7 +156,7 @@ def next_track(data: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def previous_track(data: dict[str, Any]) -> dict[str, Any]:
+def previous_track(remote, data: dict[str, Any]) -> dict[str, Any]:
     """Go to the previous track."""
 
     _press_key(VK_MEDIA_PREV_TRACK)

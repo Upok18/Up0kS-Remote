@@ -17,25 +17,30 @@ from remote.logger import error
 # from remote.session import
 from remote.handshake import create_hello
 from remote.pairing import generate_pair_code
+from remote.discovery import DiscoveryServer
 
 class NetworkServer:
     """TCP server for Up0k Remote."""
 
-    def __init__(self) -> None:
 
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def __init__(self, remote):
+
+        self.remote = remote
+
+        self.server = socket.socket(
+            socket.AF_INET,
+            socket.SOCK_STREAM
+        )
 
         self.server.setsockopt(
             socket.SOL_SOCKET,
             socket.SO_REUSEADDR,
-            1,
+            1
         )
 
         self.running = False
-
-        self.sessions: list[Session] = []
-
-        self.thread: threading.Thread | None = None
+        self.sessions = []
+        self.thread = None
 
     def start(self) -> None:
         """Start the server."""
@@ -160,7 +165,10 @@ class NetworkServer:
                     print(f"Disconnected: {session.address}")
                     break
 
-                result = dispatch(command_packet)
+                result = dispatch(
+                    command_packet,
+                    self.remote
+                )
 
                 print("17 - result:", result)
 

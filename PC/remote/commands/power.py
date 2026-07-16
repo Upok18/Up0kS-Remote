@@ -9,7 +9,7 @@ from remote.logger import info
 from remote.version import PROTOCOL_VERSION
 
 
-def shutdown(data: dict) -> dict:
+def shutdown(remote, data: dict) -> dict:
     """Shutdown the PC."""
 
     info("Shutdown command received.")
@@ -28,7 +28,7 @@ def shutdown(data: dict) -> dict:
     }
 
 
-def restart(data: dict) -> dict:
+def restart(remote, data: dict) -> dict:
     """Restart the PC."""
 
     info("Restart command received.")

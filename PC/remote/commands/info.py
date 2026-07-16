@@ -13,7 +13,7 @@ import time
 from remote.version import PROTOCOL_VERSION
 
 
-def execute(data: dict) -> dict:
+def execute(remote, data: dict) -> dict:
     """Return information about this PC."""
 
     vm = psutil.virtual_memory()

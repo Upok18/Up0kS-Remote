@@ -37,7 +37,7 @@ class DashboardPage(ctk.CTkFrame):
         
         self.create_pair_section()
 
-        self.update_status(Status.WAITING)
+        self.update_status(self.remote.status)
 
         if self.remote.pairing_active():
 
@@ -45,7 +45,7 @@ class DashboardPage(ctk.CTkFrame):
                 self.remote.pairing_code()
             )
 
-            self.update_status(
+            self.remote.set_status(
                 Status.PAIRING
             )
 
@@ -146,10 +146,6 @@ class DashboardPage(ctk.CTkFrame):
 
         self.show_pair_code(code)
 
-        self.update_status(
-            Status.PAIRING
-        )
-
         self.update_pair_timer()
 
     def update_pair_timer(self):
@@ -164,10 +160,6 @@ class DashboardPage(ctk.CTkFrame):
             self.remote.stop_pairing()
 
             self.clear_pair_code()
-
-            self.update_status(
-                Status.WAITING
-            )
 
             self.pair_button.configure(
                 text="🔗 Pair"

@@ -9,9 +9,7 @@
     "security": {
         "password_hash": "",
         "remember_devices": true,
-        "trusted_devices": [
-            "MAX 10"
-        ],
+        "trusted_devices": [],
         "lockout_minutes": 15
     },
     "ui": {

@@ -16,12 +16,14 @@ from remote.network import NetworkServer
 
 class RemoteServer:
 
-    def __init__(self):
+    def __init__(self, remote):
+
+        self.remote = remote
 
         self.running = False
 
         self.discovery = DiscoveryServer()
-        self.network = NetworkServer()
+        self.network = NetworkServer(remote)
 
     # ==================================================
     # Server

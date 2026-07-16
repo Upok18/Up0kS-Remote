@@ -17,19 +17,22 @@ from remote.commands.media import (
     previous_track,
 )
 from remote.commands.pairing import execute as pair
+from remote.commands.pair_request import execute as pair_request
 from typing import Any, Callable
 
 
-COMMANDS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
+COMMANDS: dict[
+    str,
+    Callable[[Any, dict[str, Any]], dict[str, Any]]
+] = {
     "shutdown": shutdown,
     "restart": restart,
     "ping": ping,
     "info": info,
 
+    "pair_request": pair_request,
     "pair": pair,
-    
-    # "mute": mute,
-    # "unmute": unmute,
+
     "toggle_mute": toggle_mute,
     "volume_up": volume_up,
     "volume_down": volume_down,
@@ -39,7 +42,10 @@ COMMANDS: dict[str, Callable[[dict[str, Any]], dict[str, Any]]] = {
 }
 
 
-def dispatch(packet: dict[str, Any]) -> dict[str, Any]:
+def dispatch(
+    packet,
+    remote,
+) -> dict[str, Any]:
     """Dispatch an incoming command."""
 
     packet_type = packet.get("type")
@@ -64,4 +70,7 @@ def dispatch(packet: dict[str, Any]) -> dict[str, Any]:
                 },
         }
 
-    return command(packet.get("data", {}))
+    return command(
+        remote,
+        packet.get("data", {}),
+    )
