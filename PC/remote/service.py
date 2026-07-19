@@ -13,6 +13,7 @@ from remote.devices import (
     get_trusted_devices,
     add_trusted_device,
     remove_trusted_device,
+    is_trusted,
 )
 
 from remote.pairing import (
@@ -40,6 +41,7 @@ class RemoteService:
 
         self.on_status_changed = None
         self.on_devices_changed = None
+        self.on_pairing_changed = None
 
     # ==================================================
     # System
@@ -75,6 +77,12 @@ class RemoteService:
 
         clear_pair_code()
 
+        if self.on_pairing_changed:
+            self.on_pairing_changed(
+                "------",
+                0
+            )
+
         self.pairing = False
         self.pair_code = "------"
         self.pair_expires = 0
@@ -89,9 +97,20 @@ class RemoteService:
 
         return get_trusted_devices()
 
-    def trust_device(self, device: str):
+    def trust_device(
+        self,
+        device_name: str,
+        device_id: str,
+    ):
 
-        add_trusted_device(device)
+        add_trusted_device(
+            device_name,
+            device_id,
+        )
+
+    def is_trusted(self, device_id: str) -> bool:
+
+        return is_trusted(device_id)
 
     def remove_device(self, device: str):
 
@@ -150,3 +169,16 @@ class RemoteService:
 
         if self.on_status_changed:
             self.on_status_changed(status)
+
+    def request_pairing(self):
+
+        if self.pairing_active():
+            return
+
+        self.start_pairing()
+
+        if self.on_pairing_changed:
+            self.on_pairing_changed(
+                self.pair_code,
+                self.pair_expires
+            )

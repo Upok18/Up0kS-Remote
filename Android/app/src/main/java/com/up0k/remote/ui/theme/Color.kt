@@ -19,3 +19,6 @@ val Lime500 = Color(0xFF95FF00)
 val Emerald500 = Color(0xFF00C853)
 val Lime600 = Color(0xFFAEFF00)
 val Purple500 = Color(0xFF5100FF)
+
+val Olive500 = Color(0xFFCED813)
+val InvOlive500 = Color(0xFF3127EC)

@@ -5,23 +5,20 @@ Handshake Manager
 
 from __future__ import annotations
 
-from remote.pairing import generate_pair_code
+# from remote.pairing import generate_pair_code
 from remote.version import NAME, VERSION, PROTOCOL_VERSION
-from remote.devices import has_trusted_devices
 
 
-def create_hello():
+def create_hello(pairing_required: bool):
 
-    pairing_required = not has_trusted_devices()
+    # if pairing_required:
+    #     code = generate_pair_code()
 
-    if pairing_required:
-        code = generate_pair_code()
-
-        print()
-        print("========== PAIR CODE ==========")
-        print(code)
-        print("===============================")
-        print()
+    #     print()
+    #     print("========== PAIR CODE ==========")
+    #     print(code)
+    #     print("===============================")
+    #     print()
 
     return {
         "type": "hello",

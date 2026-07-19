@@ -9,7 +9,11 @@ import org.json.JSONObject
 
 object Packets {
 
-    fun pair(code: String, device: String): JSONObject {
+    fun pair(
+        code: String,
+        device: String,
+        deviceId: String
+    ): JSONObject {
 
         return JSONObject().apply {
 
@@ -18,8 +22,11 @@ object Packets {
             put(
                 "data",
                 JSONObject().apply {
+
                     put("code", code)
                     put("device", device)
+                    put("id", deviceId)
+
                 }
             )
         }

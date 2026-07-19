@@ -16,18 +16,29 @@ def get_trusted_devices() -> list:
     return get_config("security.trusted_devices")
 
 
-def add_trusted_device(device: str):
+def add_trusted_device(
+    device_name: str,
+    device_id: str
+):
 
     devices = get_trusted_devices()
 
-    if device not in devices:
+    for device in devices:
 
-        devices.append(device)
+        if device["id"] == device_id:
+            return
 
-        set_config(
-            "security.trusted_devices",
-            devices
-        )
+    devices.append(
+        {
+            "name": device_name,
+            "id": device_id,
+        }
+    )
+
+    set_config(
+        "security.trusted_devices",
+        devices
+    )
 
 
 def remove_trusted_device(device: str):
@@ -44,9 +55,14 @@ def remove_trusted_device(device: str):
         )
 
 
-def is_trusted(device: str) -> bool:
+def is_trusted(device_id: str) -> bool:
 
-    return device in get_trusted_devices()
+    devices = get_trusted_devices()
+
+    return any(
+        device["id"] == device_id
+        for device in devices
+    )
 
 def has_trusted_devices() -> bool:
     """Return True if at least one trusted device exists."""

@@ -12,7 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 
+import com.up0k.remote.network.DeviceId
 import com.up0k.remote.components.Up0kButton
 import com.up0k.remote.network.discovery.DiscoveryClient
 import com.up0k.remote.network.tcp.RemoteClient
@@ -32,6 +35,8 @@ fun PairScreen(
     }
 
     val scope = rememberCoroutineScope()
+
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -73,7 +78,8 @@ fun PairScreen(
                     val paired = withContext(Dispatchers.IO) {
                         RemoteClient.pair(
                             code,
-                            android.os.Build.MODEL
+                            android.os.Build.MODEL,
+                            DeviceId.get(context)
                         )
                     }
 

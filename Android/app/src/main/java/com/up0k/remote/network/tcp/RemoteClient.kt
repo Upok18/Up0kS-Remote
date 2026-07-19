@@ -9,6 +9,10 @@ import java.net.InetSocketAddress
 import java.net.Socket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import android.os.Build
+import android.provider.Settings
+import android.content.Context
+import com.up0k.remote.network.DeviceId
 
 /**
  * Up0k Remote
@@ -119,6 +123,39 @@ object RemoteClient {
 
     }
 
+    fun sendClientInfo(
+        context: Context,
+        deviceName: String
+    ) {
+
+//        val uuid = Settings.Secure.getString(
+//            context.contentResolver,
+//            Settings.Secure.ANDROID_ID
+//        )
+
+        val uuid = DeviceId.get(context)
+
+        send(
+            JSONObject().apply {
+
+                put("type", "client_info")
+
+                put(
+                    "data",
+                    JSONObject().apply {
+
+                        put("uuid", uuid)
+                        put("device", deviceName)
+                        put("model", Build.MODEL)
+                        put("platform", "Android")
+                        put("android_version", Build.VERSION.RELEASE)
+                        put("app_version", session.version)
+                    }
+                )
+            }
+        )
+    }
+
     fun handshake(): Boolean {
 
         val packet = receive() ?: return false
@@ -148,16 +185,27 @@ object RemoteClient {
     // Login
     // --------------------------------------------------
 
-    fun pair(code: String, device: String): Boolean {
+    fun pair(
+        code: String,
+        device: String,
+        deviceId: String
+    ): Boolean {
 
         println("===== PAIR =====")
-        println(Packets.pair(code, device).toString(2))
+        println(
+            Packets.pair(
+                code,
+                device,
+                deviceId
+            ).toString(2)
+        )
         println("================")
 
         send(
             Packets.pair(
                 code,
-                device
+                device,
+                deviceId
             )
         )
 

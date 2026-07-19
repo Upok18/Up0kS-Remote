@@ -18,6 +18,7 @@ from remote.logger import error
 from remote.handshake import create_hello
 from remote.pairing import generate_pair_code
 from remote.discovery import DiscoveryServer
+from remote.status import Status
 
 class NetworkServer:
     """TCP server for Up0k Remote."""
@@ -93,7 +94,7 @@ class NetworkServer:
         try:
             data = client.recv(BUFFER_SIZE)
 
-            print("RAW", repr(data))
+            # print("RAW", repr(data))
 
             if not data:
                 return None
@@ -111,12 +112,12 @@ class NetworkServer:
 
         encoded = encode_packet(packet)
 
-        print("SEND_PACKET:", packet)
-        print("RAW BYTES:", repr(encoded))
+        # print("SEND_PACKET:", packet)
+        # print("RAW BYTES:", repr(encoded))
 
         client.sendall(encoded)
 
-        print("SEND COMPLETE")
+        # print("SEND COMPLETE")
 
     def remove_session(self, session: Session) -> None:
         """Remove a client session."""
@@ -128,41 +129,69 @@ class NetworkServer:
 
     def handle_client(self, client, address) -> None:
 
-        print("1 - handle_client called")
+        # print("1 - handle_client called")
 
         session = Session(client, address)
 
+        packet = self.receive_packet(session.client)
+
+        if packet is None:
+            return
+
+        if packet.get("type") != "client_info":
+            return
+        
+        data = packet.get("data", {})
+
+        session.device_name = data.get("device", "Unknown")
+        session.platform = data.get("platform", "Unknown")
+        session.app_version = data.get("app_version", "0.0.0")
+        session.uuid = data.get("uuid", "")
+
         try:
 
-            print("2 - session created")
+            # print("2 - session created")
 
             self.sessions.append(session)
 
-            print(f"Connected: {session.address}")
+            # print(f"Connected: {session.address}")
 
-            print("3 - creating hello packet")
-            hello = create_hello()
+            # print("3 - creating hello packet")
+            pairing_required = not self.remote.is_trusted(
+                session.uuid
+            )
 
-            print("4 - hello packet:", hello)
+            if pairing_required:
+                self.remote.request_pairing()
 
-            print("5 - sending hello")
+            hello = create_hello(pairing_required)
+
+            # print("4 - hello packet:", hello)
+
+            # print("5 - sending hello")
             self.send_packet(session.client, hello)
 
-            print("6 - hello sent")
+            # print("6 - hello sent")
 
-            print("Authentication removed.")
+            # print("Authentication removed.")
             session.authenticated = True
+
+            if pairing_required:
+                self.remote.set_status(Status.PAIRING)
+            else:
+                self.remote.set_status(Status.CONNECTED)
 
             while True:
 
-                print("15 - waiting for command")
+                # print("15 - waiting for command")
 
                 command_packet = self.receive_packet(session.client)
 
-                print("16 - command:", command_packet)
+                # print("16 - command:", command_packet)
 
                 if command_packet is None:
-                    print(f"Disconnected: {session.address}")
+                    # print(f"Disconnected: {session.address}")
+                    self.remote.set_status(Status.WAITING)
                     break
 
                 result = dispatch(
@@ -170,20 +199,20 @@ class NetworkServer:
                     self.remote
                 )
 
-                print("17 - result:", result)
+                # print("17 - result:", result)
 
                 self.send_packet(session.client, result)
 
-                print("18 - result sent")
+                # print("18 - result sent")
 
         except Exception as e:
 
-            error(f"Client error ({session.address}): {e}")
+            # error(f"Client error ({session.address}): {e}")
 
             import traceback
             traceback.print_exc()
 
         finally:
 
-            print("19 - removing session")
+            # print("19 - removing session")
             self.remove_session(session)

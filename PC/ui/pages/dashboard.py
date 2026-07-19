@@ -31,10 +31,12 @@ class DashboardPage(ctk.CTkFrame):
 
         self.remote = remote
 
+        self.remote.on_status_changed = self.update_status
+        self.remote.on_pairing_changed = self.on_pairing_changed
+
         self.grid_columnconfigure(0, weight=1)
 
         self.create_pc_header()
-        
         self.create_pair_section()
 
         self.update_status(self.remote.status)
@@ -47,10 +49,6 @@ class DashboardPage(ctk.CTkFrame):
 
             self.remote.set_status(
                 Status.PAIRING
-            )
-
-            self.pair_button.configure(
-                text="⏳ Pairing..."
             )
 
             self.update_pair_timer()
@@ -115,19 +113,6 @@ class DashboardPage(ctk.CTkFrame):
             sticky="ew"
         )
 
-        self.pair_button = ctk.CTkButton(
-            self.pair_frame,
-            text="🔗 Pair",
-            width=120,
-            command=self.start_pairing
-        )
-
-        self.pair_button.grid(
-            row=0,
-            column=1,
-            padx=(10, 0)
-        )
-
     def show_pair_code(self, code: str):
 
         self.pair_card.set_value(code)
@@ -136,17 +121,6 @@ class DashboardPage(ctk.CTkFrame):
     def clear_pair_code(self):
 
         self.pair_card.set_value("------")
-
-    def start_pairing(self):
-
-        if self.remote.pairing_active():
-            return
-
-        code = self.remote.start_pairing()
-
-        self.show_pair_code(code)
-
-        self.update_pair_timer()
 
     def update_pair_timer(self):
 
@@ -161,19 +135,23 @@ class DashboardPage(ctk.CTkFrame):
 
             self.clear_pair_code()
 
-            self.pair_button.configure(
-                text="🔗 Pair"
-            )
-
             return
-
-        self.pair_button.configure(
-            text=f"⏳ {remaining}s"
-        )
 
         self.after(
             1000,
             self.update_pair_timer
         )
 
-    
+    def on_pairing_changed(
+        self,
+        code: str,
+        expires: float
+    ):
+
+        if code == "------":
+            self.clear_pair_code()
+            return
+
+        self.show_pair_code(code)
+
+        self.update_pair_timer()

@@ -1,7 +1,9 @@
 package com.up0k.remote.viewmodels
 
 import androidx.lifecycle.ViewModel
+import android.app.Application
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.AndroidViewModel
 import com.up0k.remote.models.PcDevice
 import com.up0k.remote.network.discovery.DiscoveryClient
 import com.up0k.remote.network.tcp.RemoteClient
@@ -11,7 +13,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
     private val _devices = MutableStateFlow<List<PcDevice>>(emptyList())
     val devices: StateFlow<List<PcDevice>> = _devices
@@ -46,6 +50,11 @@ class HomeViewModel : ViewModel() {
         }
 
         println("✅ TCP connected")
+
+        RemoteClient.sendClientInfo(
+            getApplication(),
+            device.name
+        )
 
         if (!RemoteClient.handshake()) {
             println("❌ Handshake failed")

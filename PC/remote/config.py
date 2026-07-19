@@ -24,21 +24,28 @@ CONFIG_PATH = Path(__file__).parent.parent / "storage" / "settings.json"
 
 DEFAULT_CONFIG = {
     "version": VERSION,
+
     "server": {
         "host": DEFAULT_HOST,
         "port": DEFAULT_PORT,
         "max_connections": MAX_CONNECTIONS,
         "lan_discovery": True,
     },
+
     "ui": {
         "theme": DEFAULT_THEME,
         "show_timestamps": True,
         "enable_keybinds": True,
         "animations": True,
     },
+
     "startup": {
         "start_with_windows": False,
         "minimize_to_tray": False,
+    },
+
+    "security": {
+        "trusted_devices": []
     },
 }
 

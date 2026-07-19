@@ -22,9 +22,14 @@ class Session:
     authenticated: bool = False
 
     # Device Information
+    uuid: str = ""
     device_name: str = "Unknown Device"
+    model: str = "Unknown Model"
     platform: str = "Unknown"
+    android_version: str = "Unknown"
     app_version: str = "0.0.0"
+    uuid: str = ""
+    trusted: bool = False
 
     # Session Information
     connected_at: float = field(default_factory=time)
