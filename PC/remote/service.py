@@ -114,6 +114,8 @@ class RemoteService:
 
     def remove_device(self, device: str):
 
+        print("Service removing:", device)
+
         remove_trusted_device(device)
 
     # ==================================================

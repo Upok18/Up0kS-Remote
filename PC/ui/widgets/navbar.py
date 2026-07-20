@@ -33,7 +33,7 @@ class Navbar(ctk.CTkFrame):
             self,
             text="🏠 Dashboard",
             fg_color="transparent",
-            hover=True,
+            hover_color="#7b3dff",
             command=lambda: self.select("dashboard")
         )
 
@@ -49,7 +49,7 @@ class Navbar(ctk.CTkFrame):
             self,
             text="📱 Devices",
             fg_color="transparent",
-            hover=True,
+            hover_color="#7b3dff",
             command=lambda: self.select("devices")
         )
 
@@ -65,7 +65,7 @@ class Navbar(ctk.CTkFrame):
             self,
             text="⚙ Settings",
             fg_color="transparent",
-            hover=True,
+            hover_color="#7b3dff",
             command=lambda: self.select("settings")
         )
 
@@ -95,7 +95,7 @@ class Navbar(ctk.CTkFrame):
             btn.configure(fg_color="transparent")
 
         buttons[page].configure(
-            fg_color=("#3B82F6", "#2563EB")
+            fg_color=("#7b3dff", "#84c200")
         )
 
         if self.callback:

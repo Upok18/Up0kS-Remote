@@ -41,18 +41,20 @@ def add_trusted_device(
     )
 
 
-def remove_trusted_device(device: str):
+def remove_trusted_device(device_id: str):
 
     devices = get_trusted_devices()
 
-    if device in devices:
+    devices = [
+        device
+        for device in devices
+        if device["id"] != device_id
+    ]
 
-        devices.remove(device)
-
-        set_config(
-            "security.trusted_devices",
-            devices
-        )
+    set_config(
+        "security.trusted_devices",
+        devices
+    )
 
 
 def is_trusted(device_id: str) -> bool:

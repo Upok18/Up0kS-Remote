@@ -48,6 +48,10 @@ class MainWindow(ctk.CTk):
 
         self.navbar = Navbar(self)
 
+        self.navbar.set_callback(
+            self.show_page
+        )
+
         self.navbar.grid(
             row=0,
             column=0,
@@ -95,7 +99,8 @@ class MainWindow(ctk.CTk):
             ),
 
             "devices": DevicesPage(
-                self.page_container
+                self.page_container,
+                self.remote
             ),
 
             "settings": SettingsPage(

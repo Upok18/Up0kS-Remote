@@ -9,12 +9,7 @@
     "security": {
         "password_hash": "",
         "remember_devices": true,
-        "trusted_devices": [
-            {
-                "name": "MAX 10",
-                "id": "e298d79c-156c-4d8e-ab59-2caa76a112fc"
-            }
-        ],
+        "trusted_devices": [],
         "lockout_minutes": 15
     },
     "ui": {
