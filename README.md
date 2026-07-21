@@ -14,6 +14,8 @@ Control your computer from your phone over your local network.
 
 ### <a href="https://github.com/Upok18/Up0kS-Remote/releases">For new releases</a>
 
+---
+
 ## Features
 
 ### Power
