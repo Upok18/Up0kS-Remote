@@ -17,8 +17,8 @@ fun DevBanner(
 ) {
 
     Text(
-        text = "⚠️ Currently in active development. ❗Preview Version 0.1.0-alpha.1",
-        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.12f),
+        text = "⚠️ Currently in active development. ❗Preview Version 0.3.1-alpha.2              📱More features Coming soon..",
+        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.25f),
         fontSize = 8.sp,
         textAlign = TextAlign.Center,
         modifier = modifier

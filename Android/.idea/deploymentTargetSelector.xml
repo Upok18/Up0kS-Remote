@@ -2,12 +2,12 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
-      <SelectionState runConfigName="app">
+      <SelectionState runConfigName="Up0ks Remote">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-07-11T11:32:56.863099200Z">
+        <DropdownSelection timestamp="2026-07-20T15:34:20.656416700Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=BD353990671753908" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8NA1ARJRZ" />
             </handle>
           </Target>
         </DropdownSelection>

@@ -13,6 +13,7 @@ import android.os.Build
 import android.provider.Settings
 import android.content.Context
 import com.up0k.remote.network.DeviceId
+import com.up0k.remote.models.SystemInfo
 
 /**
  * Up0k Remote
@@ -105,6 +106,59 @@ object RemoteClient {
 
         }
 
+    }
+
+    // --------------------------------------------------
+    // Commands
+    // --------------------------------------------------
+
+    fun info(): SystemInfo? {
+
+        send(Packets.info())
+
+        val packet = receive() ?: return null
+
+        val data = packet.getJSONObject("data")
+
+        return SystemInfo(
+
+            deviceName = data.getString("device_name"),
+
+            system = data.getString("system"),
+
+            release = data.getString("release"),
+
+            version = data.getString("version"),
+
+            machine = data.getString("machine"),
+
+            processor = data.getString("processor"),
+
+            ramTotal = data.getDouble("ram_total"),
+
+            ramUsed = data.getDouble("ram_used"),
+
+            ramPercent = data.getDouble("ram_percent")
+
+        )
+    }
+
+    fun shutdown(): Boolean {
+
+        send(Packets.shutdown())
+
+        val packet = receive() ?: return false
+
+        return packet.optString("type") == "success"
+    }
+
+    fun restart(): Boolean {
+
+        send(Packets.restart())
+
+        val packet = receive() ?: return false
+
+        return packet.optString("type") == "success"
     }
 
     // --------------------------------------------------

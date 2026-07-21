@@ -53,7 +53,7 @@ fun AppNavigation(
             composable(Routes.Dashboard.route) {
 
                 DashboardScreen(
-                    navController = navController
+                    navController = navController,
                 )
 
             }

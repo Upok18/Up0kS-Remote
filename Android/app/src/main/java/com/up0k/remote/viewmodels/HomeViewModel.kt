@@ -2,16 +2,18 @@ package com.up0k.remote.viewmodels
 
 import androidx.lifecycle.ViewModel
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.AndroidViewModel
-import com.up0k.remote.models.PcDevice
-import com.up0k.remote.network.discovery.DiscoveryClient
-import com.up0k.remote.network.tcp.RemoteClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.up0k.remote.models.PcDevice
+import com.up0k.remote.network.discovery.DiscoveryClient
+import com.up0k.remote.network.tcp.RemoteClient
+import com.up0k.remote.models.SystemInfo
 
 class HomeViewModel(
     application: Application
@@ -22,6 +24,9 @@ class HomeViewModel(
 
     private val _scanning = MutableStateFlow(false)
     val scanning: StateFlow<Boolean> = _scanning
+
+    private val _systemInfo = MutableStateFlow<SystemInfo?>(null)
+    val systemInfo: StateFlow<SystemInfo?> = _systemInfo
 
     fun scan() {
 
@@ -63,6 +68,20 @@ class HomeViewModel(
         }
 
         println("✅ Handshake OK")
+
+        _systemInfo.value = RemoteClient.info()
+
+//        val systemInfo = RemoteClient.info()
+//
+//        println(systemInfo)
+
+//        val packet = RemoteClient.info()
+//
+//        if (packet != null) {
+//            Log.d("INFO", packet.toString())
+//        } else {
+//            Log.e("INFO", "Failed to get system info.")
+//        }
 
         println("===== HANDSHAKE =====")
         println("App: ${RemoteClient.session.app}")

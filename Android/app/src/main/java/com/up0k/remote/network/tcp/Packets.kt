@@ -32,4 +32,43 @@ object Packets {
         }
     }
 
+    fun info(): JSONObject {
+
+        return JSONObject().apply {
+
+            put("type", "info")
+
+            put(
+                "data",
+                JSONObject()
+            )
+        }
+    }
+
+    fun shutdown(): JSONObject {
+
+        return JSONObject().apply {
+
+            put("type", "shutdown")
+
+            put(
+                "data",
+                JSONObject()
+            )
+        }
+    }
+
+    fun restart(): JSONObject {
+
+        return JSONObject().apply {
+
+            put("type", "restart")
+
+            put(
+                "data",
+                JSONObject()
+            )
+        }
+    }
+
 }
