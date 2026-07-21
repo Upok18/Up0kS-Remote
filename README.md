@@ -54,14 +54,14 @@ Control your computer from your phone over your local network.
 - :white_check_mark: Android Application
 - :white_check_mark: Interactive Desktop UI
 - :white_check_mark: Volume Slider
-- :white_large_square: Arifin's Hot Gay Pic
+<!-- - :white_large_square: Arifin's Hot Gay Pic
 - :white_large_square: Kaiyum's Femboy Pic
 
 <br>
 <p align="left">
     <img src="https://i.imgur.com/Gyekk15.png" width="200">
 </p>
-<br>
+<br> -->
 
 ## v0.3.0
 - :white_large_square: Android App Icon
