@@ -11,12 +11,7 @@ from remote.version import PROTOCOL_VERSION
 
 def shutdown(remote, data):
 
-    subprocess.run(
-        ["shutdown", "/s", "/f", "/t", "500"],
-        check=False,
-    )
-
-    return {
+    response = {
         "version": PROTOCOL_VERSION,
         "type": "success",
         "data": {
@@ -24,17 +19,27 @@ def shutdown(remote, data):
         },
     }
 
-def restart(remote, data):
-
     subprocess.run(
-        ["shutdown", "/r", "/f", "/t", "500"],
+        ["shutdown", "/s", "/f", "/t", "30"],
         check=False,
     )
 
-    return {
+    return response
+
+
+def restart(remote, data):
+
+    response = {
         "version": PROTOCOL_VERSION,
         "type": "success",
         "data": {
             "message": "Restart started."
         },
     }
+
+    subprocess.run(
+        ["shutdown", "/r", "/f", "/t", "30"],
+        check=False,
+    )
+
+    return response

@@ -1,5 +1,5 @@
 {
-    "version": "0.2.0-alpha.2",
+    "version": "0.2.5-alpha.2",
     "server": {
         "host": "0.0.0.0",
         "port": 5000,
@@ -9,7 +9,12 @@
     "security": {
         "password_hash": "",
         "remember_devices": true,
-        "trusted_devices": [],
+        "trusted_devices": [
+            {
+                "name": "SM-A217F",
+                "id": "bfc339d5-8ea9-44fc-8544-48609a327946"
+            }
+        ],
         "lockout_minutes": 15
     },
     "ui": {

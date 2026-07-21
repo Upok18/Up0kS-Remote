@@ -35,7 +35,7 @@ class DiscoveryServer:
 
         self.thread.start()
 
-        info("Discovery service started.")
+        # info("Discovery service started.")
 
     def stop(self) -> None:
         """Stop broadcasting."""

@@ -36,14 +36,14 @@ class RemoteServer:
 
         config = load_config()
 
-        show()
+        # show()
 
-        info("Starting Up0k Remote...")
-        info(
-            f"Listening on "
-            f"{config['server']['host']}:"
-            f"{config['server']['port']}"
-        )
+        # info("Starting Up0k Remote...")
+        # info(
+        #     f"Listening on "
+        #     f"{config['server']['host']}:"
+        #     f"{config['server']['port']}"
+        # )
 
         self.discovery.start()
 

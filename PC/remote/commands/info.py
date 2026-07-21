@@ -12,6 +12,7 @@ import psutil
 import time
 from remote.version import PROTOCOL_VERSION
 
+# print("INFO COMMAND RECEIVED")
 
 def execute(remote, data: dict) -> dict:
     """Return information about this PC."""
