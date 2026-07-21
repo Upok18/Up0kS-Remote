@@ -12,25 +12,27 @@ Control your computer from your phone over your local network.
 
 ---
 
+<a href="https://github.com/Upok18/Up0kS-Remote/releases">For new releases</a>
+
 ## Features
 
 ### Power
 - Shutdown
 - Restart
 
-### Media
-- Toggle Mute
-- Volume Up
-- Volume Down
-- Play / Pause
-- Next Track
-- Previous Track
+<!-- ### Media -->
+<!-- - Toggle Mute -->
+<!-- - Volume Up -->
+<!-- - Volume Down -->
+<!-- - Play / Pause -->
+<!-- - Next Track -->
+<!-- - Previous Track -->
 
 ### System
 - Device Information
-- Ping
+<!-- - Ping -->
 - LAN Discovery
-- Password Authentication
+<!-- - Password Authentication -->
 
 ---
 
