@@ -38,7 +38,7 @@ Control your computer from your phone over your local network.
 
 - Windows 10/11
 - Python 3.14+
-- Android app (coming soon)
+- Android 8.0
 
 ---
 
