@@ -39,7 +39,7 @@ fun ComingSoonDialog(
         title = {
 
             Text(
-                text = "😭 We tried..."
+                text = "We tried..."
             )
 
         },
@@ -48,7 +48,7 @@ fun ComingSoonDialog(
 
             Text(
                 text =
-                    "This feature isn't ready yet.\n\nSee you in v0.3.0!",
+                    "This feature isn't ready yet.\n\nSee you in the next update! \uD83D\uDE80",
                 color = MaterialTheme.colorScheme.onSurface
             )
 

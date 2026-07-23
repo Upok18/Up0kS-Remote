@@ -15,14 +15,26 @@ import com.up0k.remote.network.tcp.RemoteClient
 class DashboardViewModel : ViewModel() {
 
     private val _systemInfo = MutableStateFlow<SystemInfo?>(null)
+
+    private val _connectionLost = MutableStateFlow(false)
+    val connectionLost: StateFlow<Boolean> = _connectionLost
     val systemInfo: StateFlow<SystemInfo?> = _systemInfo
 
     fun loadSystemInfo() {
         viewModelScope.launch {
+
             while (isActive) {
 
                 val info = withContext(Dispatchers.IO) {
                     RemoteClient.info()
+                }
+
+                if (info == null) {
+
+                    _systemInfo.value = null
+                    _connectionLost.value = true
+
+                    break
                 }
 
                 _systemInfo.value = info

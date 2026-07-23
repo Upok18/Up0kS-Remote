@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import json
 from copy import deepcopy
-from pathlib import Path
 from typing import Any
 
 from remote.constants import (
@@ -20,7 +19,7 @@ from remote.constants import (
 
 from remote.version import VERSION
 
-CONFIG_PATH = Path(__file__).parent.parent / "storage" / "settings.json"
+from remote.paths import CONFIG_PATH, ensure_storage
 
 DEFAULT_CONFIG = {
     "version": VERSION,
@@ -64,6 +63,8 @@ def _merge(default: dict, current: dict) -> dict:
 def load_config() -> dict:
     """Load the configuration from disk."""
 
+    ensure_storage()
+
     if not CONFIG_PATH.exists():
         save_config(deepcopy(DEFAULT_CONFIG))
         return deepcopy(DEFAULT_CONFIG)
@@ -81,7 +82,7 @@ def load_config() -> dict:
 def save_config(config: dict) -> None:
     """Save the configuration."""
 
-    CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    ensure_storage()
 
     with CONFIG_PATH.open("w", encoding="utf-8") as file:
         json.dump(config, file, indent=4)

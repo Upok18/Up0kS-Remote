@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="Up0ks Remote">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-07-20T15:34:20.656416700Z">
+        <DropdownSelection timestamp="2026-07-22T17:21:41.036937100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=RF8NA1ARJRZ" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=RR8TA0A472B" />
             </handle>
           </Target>
         </DropdownSelection>

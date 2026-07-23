@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 
 import com.up0k.remote.screens.HomeScreen
 import com.up0k.remote.screens.SplashScreen
-import com.up0k.remote.screens.DashboardScreen
+import com.up0k.remote.screens.MainScreen
 import com.up0k.remote.screens.PairScreen
 
 @Composable
@@ -52,8 +52,8 @@ fun AppNavigation(
 
             composable(Routes.Dashboard.route) {
 
-                DashboardScreen(
-                    navController = navController,
+                MainScreen(
+                    navController = navController
                 )
 
             }

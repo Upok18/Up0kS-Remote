@@ -94,13 +94,26 @@ object RemoteClient {
 
         return try {
 
-            val line = reader?.readLine() ?: return null
+            val line = reader?.readLine()
+
+            if (line == null) {
+
+                println("UP0K: Connection lost.")
+
+                disconnect()
+
+                return null
+            }
 
             Protocol.decode(line)
 
         } catch (e: Exception) {
 
+            println("UP0K: Connection lost.")
+
             e.printStackTrace()
+
+            disconnect()
 
             null
 

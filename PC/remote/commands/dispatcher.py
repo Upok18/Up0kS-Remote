@@ -18,6 +18,7 @@ from remote.commands.media import (
 )
 from remote.commands.pairing import execute as pair
 from remote.commands.pair_request import execute as pair_request
+from remote.commands.get_trusted_devices import execute as get_trusted_devices
 from typing import Any, Callable
 
 
@@ -32,6 +33,7 @@ COMMANDS: dict[
 
     "pair_request": pair_request,
     "pair": pair,
+    "get_trusted_devices": get_trusted_devices,
 
     "toggle_mute": toggle_mute,
     "volume_up": volume_up,

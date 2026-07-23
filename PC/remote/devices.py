@@ -70,3 +70,8 @@ def has_trusted_devices() -> bool:
     """Return True if at least one trusted device exists."""
 
     return len(get_trusted_devices()) > 0
+
+def get_trusted_devices_info() -> list[dict]:
+    """Return all trusted devices."""
+
+    return get_trusted_devices()

@@ -14,6 +14,7 @@ from remote.devices import (
     add_trusted_device,
     remove_trusted_device,
     is_trusted,
+    get_trusted_devices_info,
 )
 
 from remote.pairing import (
@@ -117,6 +118,9 @@ class RemoteService:
         print("Service removing:", device)
 
         remove_trusted_device(device)
+
+    def get_trusted_devices_info(self):
+        return get_trusted_devices_info()
 
     # ==================================================
     # Server

@@ -28,7 +28,6 @@ class Session:
     platform: str = "Unknown"
     android_version: str = "Unknown"
     app_version: str = "0.0.0"
-    uuid: str = ""
     trusted: bool = False
 
     # Session Information

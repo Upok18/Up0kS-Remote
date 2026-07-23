@@ -87,6 +87,9 @@ class MainWindow(ctk.CTk):
 
     def show_page(self, page: str):
 
+        if page == "devices":
+            self.pages["devices"].load_devices()
+
         self.pages[page].tkraise()
 
     def create_pages(self):

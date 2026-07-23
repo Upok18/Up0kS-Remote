@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.alpha
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.up0k.remote.components.DevBanner
 import com.up0k.remote.viewmodels.DashboardViewModel
@@ -24,9 +25,7 @@ import com.up0k.remote.components.cards.InfoCard
 import com.up0k.remote.components.cards.PowerCard
 
 @Composable
-fun DashboardScreen(
-    navController: NavController,
-) {
+fun PcScreen() {
 
     val dashboardViewModel: DashboardViewModel = viewModel()
 
@@ -43,12 +42,19 @@ fun DashboardScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(
+                    start = 24.dp,
+                    top = 24.dp,
+                    end = 24.dp,
+                    bottom = 120.dp
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
+            Spacer(modifier = Modifier.height(14.dp))
+
             Text(
-                text = "Dashboard",
+                text = "My PC",
                 fontSize = 32.sp,
                 color = MaterialTheme.colorScheme.onBackground
             )
@@ -70,11 +76,5 @@ fun DashboardScreen(
                 }
             )
         }
-
-        DevBanner(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 40.dp)
-        )
     }
 }
